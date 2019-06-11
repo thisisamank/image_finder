@@ -14,11 +14,17 @@ class Search extends Component {
     images: []
   };
   onTextChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-    axios
-      .get(this.getParameter())
-      .then(res => this.setState({ images: res.data.hits }))
-      .catch(err => console.log(err));
+    let value = e.target.value;
+    this.setState({ [e.target.name]: value });
+    if (value === "") {
+      this.setState({ images: [] });
+      console.log("cleared");
+    } else {
+      axios
+        .get(this.getParameter())
+        .then(res => this.setState({ images: res.data.hits }))
+        .catch(err => console.log(err));
+    }
   };
 
   getParameter = () => {
@@ -46,11 +52,11 @@ class Search extends Component {
           floatingLabelText="Frequency"
           onChange={this.onAmountChange}
         >
-          <MenuItem value={5} primaryText="5" />
-          <MenuItem value={10} primaryText="10" />
-          <MenuItem value={15} primaryText="15" />
-          <MenuItem value={30} primaryText="30" />
-          <MenuItem value={50} primaryText="50" />
+          <MenuItem key={1} value={5} primaryText="5" />
+          <MenuItem key={2} value={10} primaryText="10" />
+          <MenuItem key={3} value={15} primaryText="15" />
+          <MenuItem key={4} value={30} primaryText="30" />
+          <MenuItem key={5} value={50} primaryText="50" />
         </SelectField>
         <br />
         {this.state.images.length > 0 ? (
